@@ -47,7 +47,7 @@ const SERVICES: {
     deliverables: "Product + system",
     price: "scoped",
     motif: "field",
-    url: "ratuplafon.netlify.app/",
+    url: "bdacapital.vercel.app/",
   },
 ];
 

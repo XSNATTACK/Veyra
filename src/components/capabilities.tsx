@@ -32,7 +32,7 @@ const services = [
     title: "Digital Products",
     body: "From concept and interface through production.",
     detail:
-      "Smallest testable core loop first, tokens earned from real screens, iteration kept cheap. Live example: ratuplafon.netlify.app/.",
+      "Smallest testable core loop first, tokens earned from real screens, iteration kept cheap. Live example: bdacapital.vercel.app/.",
     timeline: "3–6 weeks",
     deliverables: ["Product", "System"],
     price: "scoped",
