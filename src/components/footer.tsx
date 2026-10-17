@@ -41,20 +41,16 @@ export function Footer() {
           </ul>
         </nav>
         <div className="md:col-span-4">
-          <p className="meta mb-5 text-[11px] tracking-[0.24em] text-[#6E6D6A] uppercase">Socials</p>
-          <ul className="font-display space-y-3 text-2xl font-medium tracking-tight">
-            {[
-              ["X (Twitter)", "https://x.com/"],
-              ["Instagram", "https://instagram.com/"],
-              ["LinkedIn", "https://linkedin.com/"],
-            ].map(([label, href]) => (
-              <li key={label}>
-                <a href={href} target="_blank" rel="noreferrer" className="u-link text-[#F4F2ED]/90 transition-colors hover:text-[#FF4D00]">
-                  {label}
-                </a>
-              </li>
-            ))}
-          </ul>
+          <p className="meta mb-5 text-[11px] tracking-[0.24em] text-[#6E6D6A] uppercase">Inquiries</p>
+          <p className="max-w-xs text-sm leading-relaxed text-[#A7A5A0]">
+            Available for select projects. Short, honest briefs get the fastest replies.
+          </p>
+          <Link
+            href="/contact"
+            className="u-link font-display mt-5 inline-block text-2xl font-semibold tracking-tight text-[#F4F2ED]/90 transition-colors hover:text-[#FF4D00]"
+          >
+            Start a project
+          </Link>
         </div>
       </div>
 

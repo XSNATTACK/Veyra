@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { ArrowLeft, ArrowRight, Check, CheckCircle2 } from "lucide-react";
+import { track } from "@vercel/analytics";
 import { EASE_SNAP } from "./motion-tokens";
 
 const TYPES = [
@@ -131,6 +132,7 @@ export function ContactForm() {
         return;
       }
       setSent(true);
+      track("inquiry_submitted");
     } catch {
       setError("Could not reach the server. Check your connection and try again.");
     } finally {

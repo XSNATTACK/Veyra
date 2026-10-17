@@ -4,8 +4,8 @@ export const site = {
   logo: "/veyra-logo.png",
   tagline: "Independent digital studio",
   description:
-    "Independent digital studio designing and building websites, web applications, and digital products.",
-  url: "https://veyra.studio",
+    "Independent digital studio designing and building websites, web applications, and digital products for founders and businesses worldwide.",
+  url: "https://veyra.vercel.app",
   email: "xsnckp@gmail.com",
   location: "Working worldwide",
   year: "2026",

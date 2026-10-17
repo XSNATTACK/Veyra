@@ -66,6 +66,7 @@ export function ShowreelModal({ open, onClose }: { open: boolean; onClose: () =>
               <video
                 ref={videoRef}
                 src="/teaser.mp4"
+                poster="/teaser-poster.jpg"
                 className="absolute inset-0 h-full w-full"
                 controls
                 loop

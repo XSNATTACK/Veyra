@@ -10,6 +10,10 @@ import { CountUp } from "./motion";
 import { ClipReveal, Reveal } from "./reveal";
 import { BrowserFrame } from "./browser-frame";
 import { EASE_SNAP } from "./motion-tokens";
+import { site } from "@/config/site";
+
+/** Host used for the URL pill when a project has no live URL yet. */
+const SITE_HOST = site.url.replace(/^https?:\/\//, "");
 
 export function ProjectCard({ project, flip = false }: { project: Project; flip?: boolean }) {
   const reduce: boolean = false; // studio: motion always on
@@ -83,7 +87,7 @@ export function ProjectCard({ project, flip = false }: { project: Project; flip?
 
                 aria-label={`${project.title} case study`}
               >
-                <BrowserFrame url={project.liveUrl ?? `veyra.studio/work/${project.slug}`}>
+                <BrowserFrame url={project.liveUrl ?? `${SITE_HOST}/work/${project.slug}`}>
                   <div ref={visualRef} style={{ overflow: "hidden" }}>
                     <motion.div style={reduce ? undefined : { y: innerY, scale: 1.22 }}>
                       <ProjectShot project={project} />

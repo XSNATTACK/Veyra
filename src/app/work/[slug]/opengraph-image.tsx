@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 import { getProject } from "@/content/projects";
 
+export const alt = "VEYRA — selected work case study";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

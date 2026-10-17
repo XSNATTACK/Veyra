@@ -41,19 +41,24 @@ export function PlumbingPreview() {
  * Project display visual — real screenshot when the project has one,
  * generative canvas otherwise. Shared by cards, showcase, and case pages.
  */
-export function ProjectShot({ project, closing = false }: { project: Project; closing?: boolean }) {
+export function ProjectShot({
+  project,
+  closing = false,
+  priority = false,
+}: {
+  project: Project;
+  closing?: boolean;
+  priority?: boolean;
+}) {
   if (project.visualKind === "image" && project.heroImage) {
     return (
-      <div
-        className="relative aspect-[16/10] w-full overflow-hidden bg-[#0D0D10] sm:aspect-[21/10]"
-        role="img"
-        aria-label={`${project.title} — project screenshot`}
-      >
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#0D0D10] sm:aspect-[21/10]">
         <Image
           src={project.heroImage}
-          alt={`${project.title} — project screenshot`}
+          alt={project.imageAlt ?? `${project.title} — ${project.category} screenshot`}
           fill
-          sizes="(max-width: 1024px) 100vw, 60vw"
+          priority={priority}
+          sizes={priority ? "(max-width: 1024px) 100vw, 1344px" : "(max-width: 1024px) 100vw, 60vw"}
           className="object-cover object-top"
         />
       </div>

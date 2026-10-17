@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Hero } from "@/components/hero";
@@ -9,6 +10,7 @@ import { StatsBand } from "@/components/stats-band";
 import { Statement } from "@/components/statement";
 import { Testimonials } from "@/components/testimonials";
 import { Faq } from "@/components/faq";
+import { faqs } from "@/content/faqs";
 import { Marquee } from "@/components/motion";
 import { SplitText } from "@/components/split-text";
 import { StackSection } from "@/components/stack-section";
@@ -20,6 +22,11 @@ import {
   HorizontalSlide,
   ScrollParallaxLayer,
 } from "@/components/scroll-animations";
+
+export const metadata: Metadata = {
+  // Self-referencing canonical — every other route sets its own.
+  alternates: { canonical: "/" },
+};
 
 export default function Home() {
   return (
@@ -150,6 +157,22 @@ export default function Home() {
           </div>
         </section>
       </StackSection>
+
+      {/* FAQPage structured data — mirrors the on-page FAQ accordion */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faqs.map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
+          }),
+        }}
+      />
     </>
   );
 }

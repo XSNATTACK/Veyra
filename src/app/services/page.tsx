@@ -4,11 +4,39 @@ import { ArrowRight } from "lucide-react";
 import { CapabilityAccordion, Manifest } from "@/components/capabilities";
 import { SplitText } from "@/components/split-text";
 import { Reveal } from "@/components/reveal";
+import { services } from "@/content/services";
+import { projects } from "@/content/projects";
+import { site } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "Services",
-  description: "Business websites, web applications, and digital products — stated plainly.",
+  title: "Web Design & Development Services",
+  description:
+    "Business websites, web applications, and digital products — designed and built end to end. Clear scope, fast turnaround, motion included. Working worldwide.",
   alternates: { canonical: "/services" },
+};
+
+/** Service structured data — one Service node per offering, cross-referenced to the site's Organization. */
+const servicesJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": services.map((s) => {
+    const price = s.price.match(/\d+/)?.[0];
+    return {
+      "@type": "Service",
+      name: s.title,
+      serviceType: s.title,
+      description: s.body,
+      url: `${site.url}/services`,
+      areaServed: "Worldwide",
+      provider: { "@id": `${site.url}/#organization` },
+      offers: {
+        "@type": "Offer",
+        name: `${s.title} engagement`,
+        description: s.detail,
+        url: `${site.url}/services`,
+        ...(price ? { price, priceCurrency: "USD" } : {}),
+      },
+    };
+  }),
 };
 
 export default function Services() {
@@ -27,6 +55,19 @@ export default function Services() {
       <div className="mt-12">
         <CapabilityAccordion />
       </div>
+      <Reveal>
+        <p className="mt-8 text-sm leading-relaxed text-[#A7A5A0]">
+          Recent builds:{" "}
+          {projects.map((p, i) => (
+            <span key={p.slug}>
+              <Link href={`/work/${p.slug}`} className="u-link text-[#F4F2ED]">
+                {p.title}
+              </Link>
+              {i < projects.length - 1 && <span aria-hidden className="mx-2 text-[#6E6D6A]">·</span>}
+            </span>
+          ))}
+        </p>
+      </Reveal>
       <Reveal>
         <h2 className="font-display display-3 mt-20 font-semibold">Capability manifest.</h2>
         <p className="mt-3 max-w-2xl text-[#A7A5A0]">
@@ -47,6 +88,10 @@ export default function Services() {
           </Link>
         </div>
       </Reveal>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesJsonLd) }}
+      />
     </div>
   );
 }

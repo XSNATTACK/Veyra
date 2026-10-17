@@ -1,6 +1,10 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { site } from "@/config/site";
+
+/** Host shown in the URL pill when no live URL is supplied. */
+const SITE_HOST = site.url.replace(/^https?:\/\//, "");
 
 /**
  * Browser mockup frame — traffic lights, URL pill, rounded viewport.
@@ -8,7 +12,7 @@ import type { ReactNode } from "react";
  */
 export function BrowserFrame({
   children,
-  url = "veyra.studio",
+  url = SITE_HOST,
   className,
   dark = true,
 }: {

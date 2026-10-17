@@ -5,6 +5,14 @@ export interface Project {
   index: string;
   title: string;
   summary: string;
+  /** SEO title for the case study page — the metadata template appends " — VEYRA". */
+  seoTitle?: string;
+  /** SEO meta description for the case study page. */
+  seoDescription?: string;
+  /** Descriptive alt text for the hero screenshot. */
+  imageAlt?: string;
+  /** ISO date of the last content change — powers the sitemap's lastModified. */
+  updatedAt: string;
   category: string;
   year: string;
   role: string;
@@ -33,6 +41,11 @@ export const projects: Project[] = [
     index: "01",
     title: "BaanThong",
     summary: "Authentic Thai-food restaurant with authentic spices.",
+    seoTitle: "BaanThong — Thai Restaurant Website Design & Build",
+    seoDescription:
+      "Thai restaurant website for BaanThong in Serpong Utara — story, signature dishes, full menu, gallery, GoFood ordering and visit info. A VEYRA case study.",
+    imageAlt: "BaanThong Thai restaurant website homepage — designed and built by VEYRA",
+    updatedAt: "2026-10-17",
     category: "Business Website",
     year: "2025",
     role: "Design / Build",
@@ -74,6 +87,11 @@ export const projects: Project[] = [
     index: "02",
     title: "DIDESA",
     summary: "Indonesian cuisine to connect the bridge of calmness and taste.",
+    seoTitle: "DIDESA — Indonesian Restaurant Website",
+    seoDescription:
+      "Indonesian restaurant website for DIDESA Selera Nusantara, Tangerang Selatan — Nusantara menu, gallery, location and one-tap WhatsApp reservations. A VEYRA case study.",
+    imageAlt: "DIDESA Indonesian restaurant website homepage — designed and built by VEYRA",
+    updatedAt: "2026-10-17",
     category: "Business Website",
     year: "2025",
     role: "Design / Build",
@@ -115,6 +133,11 @@ export const projects: Project[] = [
     index: "03",
     title: "BDA Capital",
     summary: "Independent investment holding company.",
+    seoTitle: "BDA Capital — Investment Holding Company Website",
+    seoDescription:
+      "Investment holding company website for BDA Capital — ownership structure, portfolio, investment approach and about, stated factually. A VEYRA case study.",
+    imageAlt: "BDA Capital investment holding company website homepage — designed and built by VEYRA",
+    updatedAt: "2026-10-17",
     category: "Business Website",
     year: "2026",
     role: "Design / Build",
@@ -156,6 +179,11 @@ export const projects: Project[] = [
     index: "04",
     title: "Sinergipest",
     summary: "Standard operation of pest cleaning for your comfort.",
+    seoTitle: "Sinergipest — Pest Control Company Website",
+    seoDescription:
+      "Pest control website for Sinergipest, Tangerang Selatan — three-step method, five treatments, testimonials and WhatsApp booking with a 24/7 emergency line. A VEYRA case study.",
+    imageAlt: "Sinergipest pest control website homepage — designed and built by VEYRA",
+    updatedAt: "2026-10-17",
     category: "Business Website",
     year: "2025",
     role: "Design / Build",

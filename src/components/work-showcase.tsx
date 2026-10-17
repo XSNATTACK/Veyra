@@ -7,6 +7,10 @@ import { ArrowUpRight } from "lucide-react";
 import { projects } from "@/content/projects";
 import { ProjectShot } from "./service-visuals";
 import { SplitText } from "./split-text";
+import { site } from "@/config/site";
+
+/** Host used for the URL pill when a project has no live URL yet. */
+const SITE_HOST = site.url.replace(/^https?:\/\//, "");
 
 /**
  * Pinned work showcase — the showpiece. The browser visual sticks
@@ -42,7 +46,7 @@ export function WorkShowcase() {
                 <span className="h-2.5 w-2.5 rounded-full bg-[#28C840]" />
               </span>
               <span className="meta mx-auto max-w-[60%] truncate rounded-full bg-[#F4F2ED]/8 px-4 py-1 text-[10px] tracking-[0.08em] text-[#A7A5A0]">
-                {p.liveUrl ?? `veyra.studio/work/${p.slug}`}
+                {p.liveUrl ?? `${SITE_HOST}/work/${p.slug}`}
               </span>
               <span className="tnum w-10 shrink-0 text-right text-[11px] text-[#FF4D00]">
                 0{active + 1}/0{projects.length}

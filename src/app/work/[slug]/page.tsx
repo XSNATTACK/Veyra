@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { getNextProject, getProject, projects } from "@/content/projects";
+import { site } from "@/config/site";
 import { ProjectShot } from "@/components/service-visuals";
 import { CaseHeroVisual } from "@/components/displacement-visual";
 import { BrowserFrame } from "@/components/browser-frame";
@@ -19,11 +20,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const p = getProject(slug);
   if (!p) return { title: "Project not found" };
+  const title = p.seoTitle ?? `${p.title} — ${p.category}`;
+  const description = p.seoDescription ?? p.summary;
   return {
-    title: `${p.title} — ${p.category}`,
-    description: p.summary,
+    title,
+    description,
     alternates: { canonical: `/work/${p.slug}` },
-    openGraph: { title: `${p.title} — VEYRA`, description: p.summary, type: "article" },
+    openGraph: { title, description, type: "article", url: `/work/${p.slug}` },
   };
 }
 
@@ -52,9 +55,13 @@ export default async function CaseStudy({ params }: { params: Promise<{ slug: st
   return (
     <article className="wrap pt-32 sm:pt-44" aria-labelledby="case-title">
       <Reveal>
-        <Link href="/work" className="meta inline-flex items-center gap-2 text-xs tracking-[0.18em] uppercase text-[#A7A5A0] hover:text-white">
-          <ArrowLeft size={14} aria-hidden /> Work index
-        </Link>
+        <nav aria-label="Breadcrumb" className="meta flex flex-wrap items-center gap-2 text-xs tracking-[0.18em] uppercase">
+          <Link href="/" className="text-[#A7A5A0] transition-colors hover:text-white">Home</Link>
+          <span aria-hidden className="text-[#6E6D6A]">/</span>
+          <Link href="/work" className="text-[#A7A5A0] transition-colors hover:text-white">Work</Link>
+          <span aria-hidden className="text-[#6E6D6A]">/</span>
+          <span aria-current="page" className="text-[#6E6D6A]">{project.title}</span>
+        </nav>
         <p className="font-display mt-6 text-xl font-bold text-[#FF4D00]">№ {project.index}</p>
         <h1 id="case-title" className="font-display display-1 mt-2 font-medium"><SplitText text={project.title} /></h1>
         <div className="meta mt-6 flex flex-wrap gap-x-8 gap-y-2 text-[11px] tracking-[0.2em] uppercase text-[#A7A5A0]">
@@ -68,8 +75,8 @@ export default async function CaseStudy({ params }: { params: Promise<{ slug: st
       <ClipReveal className="mt-10">
         <div className="frame overflow-hidden">
           {project.visualKind === "image" && project.heroImage ? (
-            <BrowserFrame url={project.liveUrl ?? `veyra.studio/work/${project.slug}`}>
-              <ProjectShot project={project} />
+            <BrowserFrame url={project.liveUrl ?? `${site.url.replace(/^https?:\/\//, "")}/work/${project.slug}`}>
+              <ProjectShot project={project} priority />
             </BrowserFrame>
           ) : (
             <CaseHeroVisual motif={project.motif} nextMotif={next.motif} index={project.index} title={project.title} />
@@ -159,6 +166,10 @@ export default async function CaseStudy({ params }: { params: Promise<{ slug: st
               </li>
             ))}
           </ul>
+          <p className="pt-1 text-sm leading-relaxed text-[#6E6D6A]">
+            <Link href="/services" className="u-link text-[#A7A5A0]">Design &amp; development services</Link>{" "}
+            — how builds like this get scoped and shipped.
+          </p>
         </Block>
         {project.outcome && (
           <Block eyebrow="Outcome" index="07" id="outcome">
@@ -190,6 +201,40 @@ export default async function CaseStudy({ params }: { params: Promise<{ slug: st
           <span className="mt-2 block text-[#A7A5A0]">{next.summary}</span>
         </Link>
       </Reveal>
+
+      {/* Structured data — breadcrumb trail + the case study as a creative work */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: `${site.url}/` },
+              { "@type": "ListItem", position: 2, name: "Work", item: `${site.url}/work` },
+              { "@type": "ListItem", position: 3, name: project.title },
+            ],
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CreativeWork",
+            "@id": `${site.url}/work/${project.slug}/#casestudy`,
+            name: `${project.title} — ${project.category}`,
+            description: project.summary,
+            url: `${site.url}/work/${project.slug}`,
+            image: project.heroImage ? `${site.url}${project.heroImage}` : undefined,
+            creator: { "@id": `${site.url}/#organization` },
+            dateModified: project.updatedAt,
+            inLanguage: "en",
+            keywords: [project.category, "case study", ...project.services, ...project.stack].join(", "),
+          }),
+        }}
+      />
     </article>
   );
 }

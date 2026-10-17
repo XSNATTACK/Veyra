@@ -239,7 +239,7 @@ function EndCard({ start }: { start: number }) {
             borderRadius: 999,
           }}
         >
-          veyra.studio
+          veyra.vercel.app
         </div>
       </div>
     </AbsoluteFill>
