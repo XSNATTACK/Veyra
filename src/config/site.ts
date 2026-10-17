@@ -5,7 +5,7 @@ export const site = {
   tagline: "Independent digital studio",
   description:
     "Independent digital studio designing and building websites, web applications, and digital products for founders and businesses worldwide.",
-  url: "https://veyra.vercel.app",
+  url: "https://bdaveyra.vercel.app",
   email: "xsnckp@gmail.com",
   location: "Working worldwide",
   year: "2026",
