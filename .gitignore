@@ -40,3 +40,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# teaser pipeline (local tools only)
+/.venv-tts
+/audio/.models
+/remotion-out
+/audio/master_mix.wav

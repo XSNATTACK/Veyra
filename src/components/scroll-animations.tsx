@@ -219,6 +219,13 @@ export function ScrollScale3D({
 
 /* ---------- TextScrub: scroll-linked text opacity reveal --------------- */
 
+/**
+ * Share of scroll progress in which the words finish revealing.
+ * Kept under 1 so the reveal leads the scroll instead of trailing it —
+ * the last word lights up well before the block has fully passed.
+ */
+const REVEAL_SPAN = 0.75;
+
 export function TextScrub({
   text,
   className,
@@ -230,7 +237,9 @@ export function TextScrub({
   const ref = useRef<HTMLParagraphElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 0.9", "end 0.4"],
+    // Tighter travel window — reveal starts the moment the block enters
+    // and completes earlier, so scrubbed text never lags the scroll.
+    offset: ["start 0.95", "end 0.6"],
   });
 
   const words = text.split(" ");
@@ -263,8 +272,8 @@ function WordFade({
   total: number;
   progress: ReturnType<typeof useScroll>["scrollYProgress"];
 }) {
-  const start = index / total;
-  const end = start + 1 / total;
+  const start = (index / total) * REVEAL_SPAN;
+  const end = start + REVEAL_SPAN / total;
   const opacity = useTransform(progress, [start, end], [0.15, 1]);
 
   return (

@@ -248,7 +248,7 @@ export function Hero() {
               <span aria-hidden className="absolute inset-0 animate-ping rounded-full bg-[#FF4D00]/30" />
             </span>
             Play teaser
-              <span className="tnum text-[#6E6D6A]">[ 00:12 ]</span>
+              <span className="tnum text-[#6E6D6A]">[ 00:36 ]</span>
           </button>
         </motion.div>
 

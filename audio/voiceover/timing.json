@@ -1,0 +1,45 @@
+{
+  "voice": "am_michael",
+  "speed": 1.0,
+  "sample_rate": 24000,
+  "segments": [
+    {
+      "act": "act1",
+      "text": "Every business has something worth showing the world.",
+      "file": "audio/voiceover\\segments\\act1.wav",
+      "duration": 2.697,
+      "start_frame": 42
+    },
+    {
+      "act": "act2",
+      "text": "At Veyra, we turn that potential into digital experiences built with intent.",
+      "file": "audio/voiceover\\segments\\act2.wav",
+      "duration": 5.376,
+      "start_frame": 196
+    },
+    {
+      "act": "act3",
+      "text": "From business websites to web applications and digital products, every detail has a purpose.",
+      "file": "audio/voiceover\\segments\\act3.wav",
+      "duration": 5.952,
+      "start_frame": 414
+    },
+    {
+      "act": "act4",
+      "text": "Strategy, design, and development\u2014working as one, from first idea to final build.",
+      "file": "audio/voiceover\\segments\\act4.wav",
+      "duration": 5.824,
+      "start_frame": 690
+    },
+    {
+      "act": "act5",
+      "text": "Veyra. Digital products, built with intent.",
+      "file": "audio/voiceover\\segments\\act5.wav",
+      "duration": 2.795,
+      "start_frame": 924
+    }
+  ],
+  "spoken_total": 22.644,
+  "master": "audio/voiceover\\am_michael_master.wav",
+  "master_duration": 36.0
+}

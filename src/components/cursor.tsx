@@ -9,11 +9,15 @@ import { useEffect, useState } from "react";
  *   data-cursor="VIEW ↗" → orange pill · data-cursor="DRAG ⟷" → ghost pill
  */
 export function Cursor() {
-  const [enabled] = useState(
-    () =>
-      typeof window !== "undefined" &&
-      !window.matchMedia("(pointer: coarse)").matches,
-  );
+  /* Hydration-safe pointer detection: render null on both the server and
+     the first client render, then enable in an effect. Deriving `enabled`
+     from `typeof window` inside useState makes the server output diverge
+     from the client's first paint, which fails hydration for the whole
+     root layout and forces React to discard the SSR tree. */
+  const [enabled, setEnabled] = useState(false);
+  useEffect(() => {
+    setEnabled(!window.matchMedia("(pointer: coarse)").matches);
+  }, []);
   const [hovering, setHovering] = useState(false);
   const [pressed, setPressed] = useState(false);
   const [label, setLabel] = useState<string | null>(null);

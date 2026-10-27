@@ -19,7 +19,8 @@ export function ShowreelModal({ open, onClose }: { open: boolean; onClose: () =>
     lenisStop();
     document.body.style.overflow = "hidden";
     const v = videoRef.current;
-    // restart + autoplay on open (muted inline so autoplay is allowed)
+    // restart + play on open; if the browser blocks unmuted autoplay, the
+    // native controls let the user press play (sound is part of the film)
     if (v) {
       v.currentTime = 0;
       v.play().catch(() => {
@@ -70,7 +71,6 @@ export function ShowreelModal({ open, onClose }: { open: boolean; onClose: () =>
                 className="absolute inset-0 h-full w-full"
                 controls
                 loop
-                muted
                 playsInline
                 preload="metadata"
                 aria-label="VEYRA studio teaser video"
@@ -78,7 +78,7 @@ export function ShowreelModal({ open, onClose }: { open: boolean; onClose: () =>
             </div>
             <div className="flex flex-wrap items-center justify-between gap-4 p-5 sm:p-6">
               <p className="text-sm text-[#A7A5A0]">
-                The studio in twelve seconds — the work speaks first.
+                The studio in thirty-six seconds — the work speaks first.
               </p>
               <div className="flex items-center gap-3">
                 <Link
