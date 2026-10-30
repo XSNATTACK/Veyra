@@ -2,13 +2,14 @@
 
 import {
   motion,
+  useInView,
   useMotionValueEvent,
   useScroll,
   useSpring,
   useTransform,
   type MotionStyle,
 } from "framer-motion";
-import { useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { EASE_SNAP, VIEWPORT_ONCE } from "./motion-tokens";
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -27,6 +28,7 @@ export function ScrollReveal({
   scale = 0.92,
   blur = 8,
   rotate = 0,
+  duration = 1.2,
 }: {
   children: ReactNode;
   className?: string;
@@ -35,6 +37,7 @@ export function ScrollReveal({
   scale?: number;
   blur?: number;
   rotate?: number;
+  duration?: number;
 }) {
   const reduce: boolean = false; // studio: motion always on
   if (reduce) return <div className={className}>{children}</div>;
@@ -57,7 +60,7 @@ export function ScrollReveal({
       }}
       viewport={VIEWPORT_ONCE}
       transition={{
-        duration: 1.2,
+        duration,
         delay,
         ease: EASE_SNAP,
       }}
@@ -221,10 +224,9 @@ export function ScrollScale3D({
 
 /**
  * Share of scroll progress in which the words finish revealing.
- * Kept under 1 so the reveal leads the scroll instead of trailing it —
- * the last word lights up well before the block has fully passed.
+ * Set to 0.5 so the reveal completes by the center of the viewport.
  */
-const REVEAL_SPAN = 0.75;
+const REVEAL_SPAN = 0.5;
 
 export function TextScrub({
   text,
@@ -237,9 +239,8 @@ export function TextScrub({
   const ref = useRef<HTMLParagraphElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    // Tighter travel window — reveal starts the moment the block enters
-    // and completes earlier, so scrubbed text never lags the scroll.
-    offset: ["start 0.95", "end 0.6"],
+    // Reveal completes by upper-center viewport
+    offset: ["start 0.9", "end 0.35"],
   });
 
   const words = text.split(" ");
@@ -309,7 +310,7 @@ export function SectionWipe({
   );
 }
 
-/* ---------- NumberTicker: scroll-driven counting number ---------------- */
+/* ---------- NumberTicker: count-up on scroll-in ---------------- */
 
 export function NumberTicker({
   value,
@@ -320,23 +321,32 @@ export function NumberTicker({
   className?: string;
   suffix?: string;
 }) {
-  const reduce: boolean = false; // studio: motion always on
+  const reduce: boolean = false;
   const ref = useRef<HTMLSpanElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start 0.9", "end 0.3"],
-  });
-  const springVal = useSpring(0, { stiffness: 80, damping: 30 });
-  const [display, setDisplay] = useState(reduce ? value : 0);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [display, setDisplay] = useState(0);
 
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    if (reduce) return;
-    springVal.set(v * value);
-  });
-
-  useMotionValueEvent(springVal, "change", (v) => {
-    setDisplay(Math.round(v));
-  });
+  useEffect(() => {
+    if (reduce) {
+      setDisplay(value);
+      return;
+    }
+    if (isInView) {
+      // Quick count-up animation
+      let current = 0;
+      const step = Math.max(1, Math.ceil(value / 30));
+      const interval = setInterval(() => {
+        current += step;
+        if (current >= value) {
+          setDisplay(value);
+          clearInterval(interval);
+        } else {
+          setDisplay(current);
+        }
+      }, 16); // ~60fps
+      return () => clearInterval(interval);
+    }
+  }, [isInView, reduce, value]);
 
   return (
     <span ref={ref} className={className}>

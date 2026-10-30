@@ -10,7 +10,7 @@ const TEXT =
 /* Pinned hold block — arrives after the scrub rests, services-pin style. */
 const HOLD_LABEL = "The standard";
 const HOLD_STATEMENT = "Direct, deliberate, built to last.";
-const HOLD_TRUST = "Trusted by founders — OpenServ · BETTER · LoganCee Studio";
+const HOLD_TRUST = "veyra";
 
 /* Choreography map (progress across the 220vh pin travel):
    0 → 0.55   word scrub dim → bright (completes well before the pin ends)

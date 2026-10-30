@@ -17,7 +17,7 @@ const STATS = [
 export function StatsBand() {
   return (
     <section className="wrap mt-28 sm:mt-40" aria-label="Studio in numbers">
-      <ScrollReveal y={100} blur={12}>
+      <ScrollReveal y={0} blur={0} duration={0.05}>
         <div className="overflow-hidden rounded-[2rem] bg-[#F4F2ED] p-8 text-[#0A0A0B] sm:rounded-[2.5rem] sm:p-12">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
@@ -36,15 +36,15 @@ export function StatsBand() {
             {STATS.map((s, i) => (
               <motion.div
                 key={s.label}
-                initial={{ opacity: 0, y: 40, scale: 0.96 }}
+                initial={{ opacity: 0, y: 0, scale: 1 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true, margin: "-60px" }}
+                viewport={{ once: true, margin: "0px" }}
                 transition={{
-                  duration: 0.8,
-                  delay: i * 0.1,
+                  duration: 0.1,
+                  delay: i * 0.01,
                   type: "spring",
-                  stiffness: 120,
-                  damping: 18,
+                  stiffness: 1000,
+                  damping: 30,
                 }}
                 className="group bg-[#F4F2ED] p-6 transition-colors duration-300 hover:bg-[#0A0A0B] hover:text-[#F4F2ED] sm:p-8"
               >

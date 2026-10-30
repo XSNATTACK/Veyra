@@ -33,11 +33,13 @@ function ScrubWord({
   total: number;
   progress: MotionValue<number>;
 }) {
-  const start = index / total;
-  const end = start + 1 / total;
-  const color = useTransform(progress, [start, end], ["rgba(10,10,11,0.13)", "rgba(10,10,11,1)"]);
+  /* Match TextScrub timing: REVEAL_SPAN = 0.5, reveal completes at center */
+  const REVEAL_SPAN = 0.5;
+  const start = (index / total) * REVEAL_SPAN;
+  const end = start + REVEAL_SPAN / total;
+  const color = useTransform(progress, [start, end], ["rgba(10,10,11,0.15)", "rgba(10,10,11,1)"]);
   return (
-    <motion.span style={{ color, display: "inline-block", marginRight: "0.26em" }}>
+    <motion.span style={{ color, display: "inline-block", marginRight: "0.28em" }}>
       {word}
     </motion.span>
   );
@@ -49,7 +51,7 @@ function ScrubWord({
  */
 export function Testimonials() {
   const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.9", "start 0.35"] });
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.9", "end 0.35"] });
   const [idx, setIdx] = useState(0);
   const q = QUOTES[idx];
   const words = q.text.split(" ");
