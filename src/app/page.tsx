@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Hero } from "@/components/hero";
 import { BlackHole, StarsBackdrop } from "@/components/black-hole";
-import { Manifest } from "@/components/capabilities";
+import { Manifest, ManifestBanner } from "@/components/capabilities";
 import { ServiceShowcase } from "@/components/service-showcase";
 import { WorkShowcase } from "@/components/work-showcase";
 import { StatsBand } from "@/components/stats-band";
@@ -65,6 +65,9 @@ export default function Home() {
             <HorizontalSlide from="left" distance={100}>
               <div className="mt-12">
                 <Manifest />
+              </div>
+              <div className="mt-4">
+                <ManifestBanner />
               </div>
             </HorizontalSlide>
           </div>

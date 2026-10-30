@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { CapabilityAccordion, Manifest } from "@/components/capabilities";
+import { CapabilityAccordion, ManifestBanner, Manifest } from "@/components/capabilities";
 import { SplitText } from "@/components/split-text";
 import { Reveal } from "@/components/reveal";
 import { services } from "@/content/services";
@@ -76,6 +76,9 @@ export default function Services() {
       </Reveal>
       <div className="mt-8">
         <Manifest />
+        <div className="mt-4">
+          <ManifestBanner />
+        </div>
       </div>
       <Reveal>
         <div className="mt-14 border-t border-[#F4F2ED]/10 py-10">

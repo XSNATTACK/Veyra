@@ -122,3 +122,24 @@ export function Manifest() {
     </div>
   );
 }
+
+export function ManifestBanner() {
+  return (
+    <Link
+      href="/contact"
+      className="group mt-px flex flex-wrap items-center justify-between gap-6 overflow-hidden rounded-3xl bg-[#FF4D00] px-6 py-8 text-white transition-colors hover:bg-[#FF4D00]/90 sm:rounded-t-none sm:px-10 sm:py-10"
+      aria-label="Start a project — Have something worth building?"
+    >
+      <span className="block">
+        <span className="meta block text-[11px] font-bold tracking-[0.24em] text-white/70 uppercase">Next step</span>
+        <span className="font-display mt-2 block text-3xl font-bold tracking-tight text-white sm:text-5xl">
+          Have something worth building?
+        </span>
+      </span>
+      <span className="meta inline-flex items-center gap-3 rounded-full bg-black px-6 py-4 text-xs font-bold tracking-[0.16em] text-white uppercase transition-colors group-hover:bg-white group-hover:text-black">
+        Start a project
+        <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" aria-hidden />
+      </span>
+    </Link>
+  );
+}

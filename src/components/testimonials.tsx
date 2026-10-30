@@ -49,7 +49,7 @@ function ScrubWord({
  */
 export function Testimonials() {
   const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.85", "end 0.5"] });
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.9", "start 0.35"] });
   const [idx, setIdx] = useState(0);
   const q = QUOTES[idx];
   const words = q.text.split(" ");
@@ -96,7 +96,7 @@ export function Testimonials() {
       </div>
       </div>
       {/* pin travel spacer (desktop) */}
-      <div className="hidden lg:block lg:h-[55vh]" aria-hidden />
+      <div className="hidden lg:block lg:h-[40vh]" aria-hidden />
     </section>
   );
 }
