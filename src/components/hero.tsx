@@ -238,17 +238,17 @@ export function Hero() {
             />
             Available for new projects
           </span>
-            <button
-              onClick={() => setTeaserOpen(true)}
-              className="group meta glass-pill inline-flex items-center gap-3 rounded-full py-2 pr-5 pl-2 text-[11px] tracking-[0.2em] uppercase transition-colors hover:border-[#FF4D00]"
-              aria-haspopup="dialog"
-            >
+          <button
+            onClick={() => setTeaserOpen(true)}
+            className="group meta glass-pill inline-flex items-center gap-3 rounded-full py-2 pr-5 pl-2 text-[11px] tracking-[0.2em] uppercase transition-colors hover:border-[#FF4D00]"
+            aria-haspopup="dialog"
+          >
             <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#F4F2ED] text-black transition-colors group-hover:bg-[#FF4D00] group-hover:text-white">
               <Play size={14} fill="currentColor" aria-hidden />
               <span aria-hidden className="absolute inset-0 animate-ping rounded-full bg-[#FF4D00]/30" />
             </span>
             Play teaser
-              <span className="tnum text-[#6E6D6A]">[ 00:36 ]</span>
+            <span className="tnum text-[#6E6D6A]">[ 00:36 ]</span>
           </button>
         </motion.div>
 

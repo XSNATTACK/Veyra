@@ -9,6 +9,13 @@ import { lenisStart, lenisStop } from "./smooth-scroll";
 
 const WORDS = ["Design", "Development", "Product", "Intent"];
 
+const SUBTITLES: Record<string, string> = {
+  Design:      "Crafting visuals that stop people mid-scroll — interfaces that feel inevitable, brands that stick, and every detail sweated until it's right",
+  Development: "Engineered for speed, scale, and longevity — clean code, bulletproof architecture, shipped on time and built to last",
+  Product:     "From zero to launched — strategy, UX, and execution working as one to build things people actually want to use",
+  Intent:      "Nothing arbitrary, nothing wasted — every decision tied back to a purpose, every pixel earning its place on the screen",
+};
+
 /**
  * Kota-style first-visit loader: giant 0→100% counter, cycling words,
  * orange progress line, curtain lift. Once per session.
@@ -89,8 +96,8 @@ export function IntroCurtain() {
             </p>
           </div>
 
-          {/* middle: cycling word */}
-          <div className="flex flex-col items-center text-center">
+          {/* middle: cycling word + subtitle */}
+          <div className="flex flex-col items-center text-center gap-4">
             <AnimatePresence mode="wait">
               <motion.p
                 key={word}
@@ -101,6 +108,18 @@ export function IntroCurtain() {
                 className="font-display text-4xl font-bold tracking-tight text-[#F4F2ED]/80 sm:text-6xl"
               >
                 {word}
+              </motion.p>
+            </AnimatePresence>
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={`sub-${word}`}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.35, ease: EASE_SNAP, delay: 0.05 }}
+                className="max-w-sm text-[12px] leading-relaxed tracking-widest text-[#6E6D6A] uppercase text-center"
+              >
+                {SUBTITLES[word]}
               </motion.p>
             </AnimatePresence>
           </div>

@@ -3,11 +3,15 @@
 import { motion } from "framer-motion";
 import { NumberTicker, ScrollReveal } from "./scroll-animations";
 
-const STATS = [
+type Stat =
+  | { value: number; suffix: string; text?: never; label: string; note: string }
+  | { text: string; value?: never; suffix?: never; label: string; note: string };
+
+const STATS: Stat[] = [
   { value: 100, suffix: "+", label: "Projects shipped", note: "Founders, SaaS, agencies" },
   { value: 3, suffix: "yrs", label: "Independent practice", note: "Design → code, no handoff" },
   { value: 100, suffix: "%", label: "Motion-rich builds", note: "Every page earns its scroll" },
-  { value: 2, suffix: "wks", label: "Post-launch support", note: "Fixes included, always" },
+  { text: "Lifetime", label: "Post-launch support", note: "Fixes included, always" },
 ];
 
 /**
@@ -16,7 +20,7 @@ const STATS = [
  */
 export function StatsBand() {
   return (
-    <section className="wrap mt-28 sm:mt-40" aria-label="Studio in numbers">
+    <section className="wrap mt-14 sm:mt-20" aria-label="Studio in numbers">
       <ScrollReveal y={0} blur={0} duration={0.05}>
         <div className="overflow-hidden rounded-[2rem] bg-[#F4F2ED] p-8 text-[#0A0A0B] sm:rounded-[2.5rem] sm:p-12">
           <div className="flex flex-wrap items-end justify-between gap-4">
@@ -49,7 +53,11 @@ export function StatsBand() {
                 className="group bg-[#F4F2ED] p-6 transition-colors duration-300 hover:bg-[#0A0A0B] hover:text-[#F4F2ED] sm:p-8"
               >
                 <p className="font-display tnum text-5xl font-extrabold tracking-tight sm:text-6xl">
-                  <NumberTicker value={s.value} suffix={s.suffix} />
+                  {s.text !== undefined ? (
+                    s.text
+                  ) : (
+                    <NumberTicker value={s.value} suffix={s.suffix} />
+                  )}
                 </p>
                 <p className="font-display mt-3 text-lg font-bold">{s.label}</p>
                 <p className="meta mt-1 text-[11px] tracking-[0.14em] text-current uppercase opacity-60">
