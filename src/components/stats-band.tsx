@@ -20,7 +20,7 @@ const STATS: Stat[] = [
  */
 export function StatsBand() {
   return (
-    <section className="wrap mt-14 sm:mt-20" aria-label="Studio in numbers">
+    <section className="wrap mt-6 sm:mt-10" aria-label="Studio in numbers">
       <ScrollReveal y={0} blur={0} duration={0.05}>
         <div className="overflow-hidden rounded-[2rem] bg-[#F4F2ED] p-8 text-[#0A0A0B] sm:rounded-[2.5rem] sm:p-12">
           <div className="flex flex-wrap items-end justify-between gap-4">

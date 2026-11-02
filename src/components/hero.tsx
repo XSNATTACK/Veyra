@@ -260,7 +260,6 @@ export function Hero() {
         >
           <p className="lede max-w-2xl text-lg md:col-span-6">
             Websites, applications, and products for businesses and founders.
-            Direct, deliberate, built to last.
           </p>
           <div className="flex flex-wrap items-center gap-4 md:col-span-6 md:justify-end">
             <Link
