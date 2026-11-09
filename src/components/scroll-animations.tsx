@@ -10,7 +10,7 @@ import {
   type MotionStyle,
 } from "framer-motion";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { EASE_SNAP, VIEWPORT_ONCE } from "./motion-tokens";
+import { EASE_SNAP } from "./motion-tokens";
 
 /* ═══════════════════════════════════════════════════════════════════════════
    HEAVY SCROLL ANIMATIONS
@@ -18,17 +18,11 @@ import { EASE_SNAP, VIEWPORT_ONCE } from "./motion-tokens";
    Studio decision: motion is always on (reduced-motion preference ignored).
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* ---------- ScrollReveal: fade-up + scale + blur on scroll-in ---------- */
+/* ---------- ScrollReveal: STATIC (fade-in removed 2026-11-09) ---------- */
 
 export function ScrollReveal({
   children,
   className,
-  delay = 0,
-  y = 100,
-  scale = 0.92,
-  blur = 8,
-  rotate = 0,
-  duration = 1.2,
 }: {
   children: ReactNode;
   className?: string;
@@ -39,89 +33,21 @@ export function ScrollReveal({
   rotate?: number;
   duration?: number;
 }) {
-  const reduce: boolean = false; // studio: motion always on
-  if (reduce) return <div className={className}>{children}</div>;
-  return (
-    <motion.div
-      className={className}
-      initial={{
-        opacity: 0,
-        y,
-        scale,
-        filter: `blur(${blur}px)`,
-        rotate,
-      }}
-      whileInView={{
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        filter: "blur(0px)",
-        rotate: 0,
-      }}
-      viewport={VIEWPORT_ONCE}
-      transition={{
-        duration,
-        delay,
-        ease: EASE_SNAP,
-      }}
-    >
-      {children}
-    </motion.div>
-  );
+  return <div className={className}>{children}</div>;
 }
 
-/* ---------- SplitReveal: stagger children with offset animation --------- */
+/* ---------- SplitReveal: STATIC (fade-in removed 2026-11-09) ----------- */
 
 export function SplitReveal({
   children,
   className,
-  stagger = 0.1,
-  direction = "up",
 }: {
   children: ReactNode;
   className?: string;
   stagger?: number;
   direction?: "up" | "left" | "right";
 }) {
-  const reduce: boolean = false; // studio: motion always on
-  if (reduce) return <div className={className}>{children}</div>;
-
-  const axis = direction === "up" ? { y: 80 } : direction === "left" ? { x: -80 } : { x: 80 };
-  const reset = direction === "up" ? { y: 0 } : { x: 0 };
-
-  return (
-    <motion.div
-      className={className}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-60px" }}
-      variants={{
-        hidden: {},
-        visible: {
-          transition: { staggerChildren: stagger, delayChildren: 0.05 },
-        },
-      }}
-    >
-      {Array.isArray(children)
-        ? children.map((child, i) => (
-            <motion.div
-              key={i}
-              variants={{
-                hidden: { opacity: 0, filter: "blur(6px)", ...axis },
-                visible: {
-                  opacity: 1,
-                  filter: "blur(0px)",
-                  ...reset,
-                  transition: { duration: 1, ease: EASE_SNAP },
-                },
-              }}
-            >
-              {child}
-            </motion.div>
-          ))
-        : children}
-    </motion.div>
-  );
+  return <div className={className}>{children}</div>;
 }
 
 /* ---------- ScrollParallaxLayer: multi-speed parallax layers ----------- */
@@ -154,38 +80,18 @@ export function ScrollParallaxLayer({
   );
 }
 
-/* ---------- HorizontalSlide: items slide in from left/right on scroll --- */
+/* ---------- HorizontalSlide: STATIC (fade-in removed 2026-11-09) -------- */
 
 export function HorizontalSlide({
   children,
   className,
-  from = "left",
-  distance = 120,
 }: {
   children: ReactNode;
   className?: string;
   from?: "left" | "right";
   distance?: number;
 }) {
-  const reduce: boolean = false; // studio: motion always on
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-  const x = useTransform(
-    scrollYProgress,
-    [0, 0.5],
-    [from === "left" ? -distance : distance, 0],
-  );
-  const opacity = useTransform(scrollYProgress, [0, 0.35], [0, 1]);
-
-  if (reduce) return <div className={className}>{children}</div>;
-  return (
-    <div ref={ref} className={className}>
-      <motion.div style={{ x, opacity }}>{children}</motion.div>
-    </div>
-  );
+  return <div className={className}>{children}</div>;
 }
 
 /* ---------- ScrollScale3D: 3D tilt + scale on scroll -------------------- */
@@ -220,13 +126,7 @@ export function ScrollScale3D({
   );
 }
 
-/* ---------- TextScrub: scroll-linked text opacity reveal --------------- */
-
-/**
- * Share of scroll progress in which the words finish revealing.
- * Set to 0.5 so the reveal completes by the center of the viewport.
- */
-const REVEAL_SPAN = 0.5;
+/* ---------- TextScrub: STATIC (word fade removed 2026-11-09) ----------- */
 
 export function TextScrub({
   text,
@@ -235,55 +135,7 @@ export function TextScrub({
   text: string;
   className?: string;
 }) {
-  const reduce: boolean = false; // studio: motion always on
-  const ref = useRef<HTMLParagraphElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    // Reveal completes by upper-center viewport
-    offset: ["start 0.9", "end 0.35"],
-  });
-
-  const words = text.split(" ");
-
-  if (reduce) return <p ref={ref} className={className}>{text}</p>;
-
-  return (
-    <p ref={ref} className={className} style={{ lineHeight: 1.6 }}>
-      {words.map((word, i) => (
-        <WordFade
-          key={`${word}-${i}`}
-          word={word}
-          index={i}
-          total={words.length}
-          progress={scrollYProgress}
-        />
-      ))}
-    </p>
-  );
-}
-
-function WordFade({
-  word,
-  index,
-  total,
-  progress,
-}: {
-  word: string;
-  index: number;
-  total: number;
-  progress: ReturnType<typeof useScroll>["scrollYProgress"];
-}) {
-  const start = (index / total) * REVEAL_SPAN;
-  const end = start + REVEAL_SPAN / total;
-  const opacity = useTransform(progress, [start, end], [0.15, 1]);
-
-  return (
-    <motion.span
-      style={{ opacity, display: "inline-block", marginRight: "0.28em" }}
-    >
-      {word}
-    </motion.span>
-  );
+  return <p className={className}>{text}</p>;
 }
 
 /* ---------- SectionWipe: clip-path wipe reveal on scroll --------------- */
