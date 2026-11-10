@@ -130,13 +130,17 @@ body {
   transform-origin: left;
 }
 
-/* CTA arrow — STATIC (hover shift removed 2026-11-09). Restore from globals.css.bak */
+/* CTA arrow shift */
 .cta-arrow {
   display: inline-block;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+a:hover .cta-arrow,
+button:hover .cta-arrow {
+  transform: translate(2px, -2px);
 }
 
-/* Primary CTA — STATIC (hover animation removed 2026-11-09): no fill sweep,
-   gloss, lift or glow. Simple instant color swap on hover. */
+/* Primary CTA — eye-catchy hover: sliding accent fill + gloss sweep + lift + glow */
 .btn-primary {
   position: relative;
   isolation: isolate;
@@ -145,36 +149,108 @@ body {
   color: #0a0a0b;
   transition:
     color 0.3s ease,
-    background-color 0.3s ease;
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease,
+    border-color 0.3s ease;
+}
+/* sliding accent fill */
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  background: linear-gradient(135deg, #ff4d00 0%, #ff6a00 55%, #ff3d00 100%);
+  transform: translateY(102%);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* gloss sweep */
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 45%;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  transform: translateX(-220%) skewX(-18deg);
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .btn-primary:hover,
 .btn-primary:focus-visible {
-  background-color: #ff4d00;
   color: #fff;
+  transform: translateY(-3px);
+  box-shadow:
+    0 18px 48px -12px rgba(255, 77, 0, 0.8),
+    0 0 0 1px rgba(255, 77, 0, 0.65),
+    0 0 32px -4px rgba(255, 77, 0, 0.55);
 }
-/* Monumental CTA — larger processional presence. */
+/* Monumental CTA — larger processional presence, same accent system. */
 .btn-majestic {
   padding: 1.15rem 2.25rem;
   letter-spacing: 0.12em;
 }
+.btn-primary:hover::before,
+.btn-primary:focus-visible::before {
+  transform: translateY(0);
+}
+.btn-primary:hover::after,
+.btn-primary:focus-visible::after {
+  transform: translateX(480%) skewX(-18deg);
+}
+.btn-primary:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 4px 16px -6px rgba(255, 77, 0, 0.6);
+}
+.btn-primary:hover .cta-arrow,
+.btn-primary:focus-visible .cta-arrow {
+  transform: translateX(5px) scale(1.2);
+}
 .btn-primary:disabled {
-  opacity: 0.6;
+  transform: none;
+  box-shadow: none;
+}
+.btn-primary:disabled::before,
+.btn-primary:disabled::after {
+  display: none;
 }
 
-/* Outline CTA (nav) — STATIC (fill/glow removed 2026-11-09) */
+/* Outline CTA (nav) — fill + glow on hover */
 .btn-outline {
   position: relative;
   isolation: isolate;
+  overflow: hidden;
   transition:
     color 0.3s ease,
     border-color 0.3s ease,
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease,
     background-color 0.3s ease;
+}
+.btn-outline::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(135deg, #ff4d00, #ff6a00);
+  opacity: 0;
+  transform: scale(0.9);
+  transition:
+    opacity 0.3s ease,
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .btn-outline:hover,
 .btn-outline:focus-visible {
-  background-color: #ff4d00;
   color: #fff;
   border-color: #ff4d00;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px -8px rgba(255, 77, 0, 0.65);
+}
+.btn-outline:hover::before,
+.btn-outline:focus-visible::before {
+  opacity: 1;
+  transform: scale(1);
 }
 
 /* Focus */
